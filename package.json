@@ -1,0 +1,12 @@
+{
+  "name": "ai-math-differentiator",
+  "version": "1.0.0",
+  "description": "AI-powered differentiated learning: one quadratic-equation task adapted into Foundation, Standard and Advanced levels with verified maths.",
+  "private": true,
+  "scripts": {
+    "dev": "node dev-server.js",
+    "test": "node tests/run-tests.js && node tests/ai-pipeline-test.js"
+  },
+  "engines": { "node": ">=18" },
+  "license": "MIT"
+}
