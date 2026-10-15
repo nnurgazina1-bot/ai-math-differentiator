@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Math Differentiator</title>
+  <meta name="description" content="One core quadratic-equation task, adapted by AI into Foundation, Standard and Advanced levels with tailored hints, feedback and verified solutions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f5d50'/%3E%3Ctext x='32' y='43' font-size='30' text-anchor='middle' fill='white' font-family='Georgia'%3Ex%C2%B2%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">x²</span>
+        <div>
+          <h1 data-i18n="appTitle">AI Math Differentiator</h1>
+          <p class="sub" data-i18n="appSub">One core task · three levels · AI-adapted, engine-verified</p>
+        </div>
+      </div>
+      <label class="lang">
+        <span data-i18n="language">Language</span>
+        <select id="lang" aria-label="Language">
+          <option value="en">English</option>
+          <option value="kk">Қазақша</option>
+          <option value="ru">Русский</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="core card">
+      <div class="eyebrow" data-i18n="coreLabel">Core task</div>
+      <p class="core-text" id="coreText"></p>
+    </section>
+
+    <section aria-labelledby="levelHeading">
+      <h2 id="levelHeading" class="section-title" data-i18n="chooseLevel">Choose a level</h2>
+      <div class="levels" role="radiogroup" aria-labelledby="levelHeading">
+        <button class="level" role="radio" data-level="1" aria-checked="true">
+          <span class="lvl-num">1</span>
+          <span class="lvl-name" data-i18n="l1name">Foundation</span>
+          <span class="lvl-desc" data-i18n="l1desc">Simple context, guided step-by-step breakdown, direct hints</span>
+        </button>
+        <button class="level" role="radio" data-level="2" aria-checked="false">
+          <span class="lvl-num">2</span>
+          <span class="lvl-name" data-i18n="l2name">Standard</span>
+          <span class="lvl-desc" data-i18n="l2desc">Grade-level problem: discriminant and quadratic formula</span>
+        </button>
+        <button class="level" role="radio" data-level="3" aria-checked="false">
+          <span class="lvl-num">3</span>
+          <span class="lvl-name" data-i18n="l3name">Advanced</span>
+          <span class="lvl-desc" data-i18n="l3desc">Real-world modelling, multi-step logic, interpreting roots</span>
+        </button>
+      </div>
+      <div class="actions">
+        <button id="generate" class="btn primary" data-i18n="generate">Generate task</button>
+        <span class="status" id="status" role="status" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <section id="taskSection" class="card task" hidden>
+      <div class="badges">
+        <span class="badge level-badge" id="levelBadge"></span>
+        <span class="badge" id="sourceBadge"></span>
+        <button class="badge verified" id="verifiedBadge" aria-expanded="false" aria-controls="verifyPanel"></button>
+      </div>
+      <div class="verify-panel" id="verifyPanel" hidden></div>
+
+      <h2 class="task-title" id="taskTitle"></h2>
+      <p class="context math" id="taskContext"></p>
+      <p class="task-q math" id="taskQuestion"></p>
+
+      <div id="guidedBlock" class="block" hidden>
+        <h3 data-i18n="guided">Guided steps</h3>
+        <ol class="guided" id="guidedList"></ol>
+      </div>
+
+      <div class="block">
+        <div class="row-between">
+          <h3 data-i18n="hints">Hints</h3>
+          <button class="btn ghost" id="hintBtn"></button>
+        </div>
+        <ol class="hints" id="hintList"></ol>
+      </div>
+
+      <div class="block answer-block">
+        <h3 data-i18n="yourAnswer">Your answer</h3>
+        <form id="answerForm" class="answer-row" autocomplete="off">
+          <input id="answerInput" type="text" inputmode="text" aria-describedby="answerHelp">
+          <button class="btn primary" type="submit" data-i18n="check">Check</button>
+        </form>
+        <p class="help" id="answerHelp"></p>
+        <div id="verdict" class="verdict" hidden></div>
+        <div id="aiFeedback" class="ai-feedback math" hidden></div>
+      </div>
+
+      <div class="block">
+        <h3 data-i18n="askTutor">Ask the AI tutor</h3>
+        <form id="askForm" class="answer-row">
+          <input id="askInput" type="text" maxlength="500">
+          <button class="btn" type="submit" data-i18n="ask">Ask</button>
+        </form>
+        <div id="askAnswer" class="ai-feedback math" hidden></div>
+      </div>
+
+      <div class="block">
+        <button class="btn ghost" id="solutionBtn" data-i18n="showSolution">Show full solution</button>
+        <div id="solution" class="solution" hidden>
+          <ol id="solutionList" class="math"></ol>
+          <p class="final math" id="finalAnswer"></p>
+          <p class="tip math" id="checkTip"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card how">
+      <h2 class="section-title" data-i18n="howTitle">How the differentiation works</h2>
+      <div class="how-grid">
+        <div><strong data-i18n="how1t">1 · Same core task</strong><p data-i18n="how1">Every level is the same mathematics: solve ax² + bx + c = 0 and interpret the roots.</p></div>
+        <div><strong data-i18n="how2t">2 · AI adapts it</strong><p data-i18n="how2">Level-specific prompts change context, method, scaffolding, hints, language and explanation depth.</p></div>
+        <div><strong data-i18n="how3t">3 · Engine verifies it</strong><p data-i18n="how3">Exact arithmetic checks the AI's equation and answer, and checks your answer instantly. AI output that fails is regenerated.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap foot" data-i18n="footer">Educational Technology &amp; AI · Topic 8: AI for Differentiated Learning</footer>
+
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+  <script defer src="lib/math.js"></script>
+  <script defer src="i18n.js"></script>
+  <script defer src="app.js"></script>
+</body>
+</html>
